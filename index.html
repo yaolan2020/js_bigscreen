@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="icon" type="image/x-icon"  href="favicon.ico" />
+    <link href="css/index.css" rel="stylesheet">
+    <script type="text/javascript" src="/js/jquery-3.1.1.min.js"></script>
+    <script type="text/javascript" src="/js/echarts.min.js"></script>
+    <script src="js/videojs/video5108.min.js"></script>
+    <script src="js/cyberplayer.js"></script>  
+    <script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.15&key=16ad90ab765ee23eba8b401ec3bcb653"></script> 
+</head>
+<body >
+<div class="big_screen" id="big_screen">
+    <!-- 顶部标题 -->
+    <div class='big_screen_top'>
+        <div class="data_top_left">
+            <span id='hour'>14:33:33</span>
+            <span id='year'>2020/05/18</span>
+        </div>
+        <span>智慧环保园</span>
+        <div class="data_top_right">
+            <img src='/image/air.png'/>
+            <div>
+                <p>温度：30℃</p>
+                <p>湿度：79.07%rh</p>
+            </div>
+            <div>
+                <p>风向：170.01°</p>
+                <p>风速：1.94m/s</p>
+            </div>
+            <div>
+                <p>压力：988.17Pa</p>
+                <p>降雨量：6.2mm</p>
+            </div>
+        </div>
+    </div>
+    <!-- 底层地图--现用图片代替 -->
+    <div class='big_screen_map'>
+        <div id="containerMap"></div>
+    </div>
+    <!-- 上层显示数据内容 -->
+    <div class='big_screen_content'>
+        <div class="content_left">
+            <!-- 企业信息 -->
+            <div class='company'>
+                <div class='title'>
+                     <p class='title_name'>企业信息</p>
+                     <p class='title_des'>
+                         <span class='name'>企业总数：</span>
+                         <span class='num'>20156个</span>
+                     </p>
+                </div>
+                <div class='content'>
+                    <div class='echars' id='echar_company_production'></div>
+                </div>
+                <div class='content'>
+                    <div class='echars' id='echar_company'></div>
+                    <div class='echardes company_des'>
+                        <div style="width: 30%;float:left">
+                            <p class='company_color_col1_one'>涂料：<span>1</span></p>
+                            <p class='company_color_col1_two'>树脂(水性)：<span>2</span></p>
+                            <p class='company_color_col1_three'>涂料 油墨：<span>3</span></p>
+                            <p class='company_color_col1_four'>树脂：<span>4</span></p>
+                            <p class='company_color_col1_five'>除草剂：<span>5</span></p>
+                            <p class='company_color_col1_six'>未知：<span>5</span></p>
+                        </div>
+                        <div style="width: 30%;float:left">
+                            <p class='company_color_col2_one'>饲料制造：<span>1</span></p>
+                            <p class='company_color_col2_two'>涂料 树脂：<span>2</span></p>
+                            <p class='company_color_col2_three'>五金制品：<span>3</span></p>
+                            <p class='company_color_col2_four'>合成材料：<span>4</span></p>
+                            <p class='company_color_col2_five'>塑料制品：<span>5</span></p>
+                            <p class='company_color_col2_six'>非化工类企业：<span>5</span></p>
+                        </div>
+                        <div style="width: 40%;float:left">
+                            <p class='company_color_col3_one'>其他专用化学产品：<span>1</span></p>
+                            <p class='company_color_col3_two'>饲料添加剂：<span>2</span></p>
+                            <p class='company_color_col3_three'>其他化学品：<span>3</span></p>
+                            <p class='company_color_col3_four'>有机化学原料造制：<span>4</span></p>
+                            <p class='company_color_col3_five'>服装制造：<span>5</span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- 人员信息 -->
+            <div class='users'>
+                <div class='title'>
+                    <p class='title_name'>人员信息</p>
+                    <p class='title_des'>
+                        <span class='name'>总数：</span>
+                        <span class='num'>20156个</span>
+                        <span class='name'>访客：</span>
+                        <span class='num'>20156个</span>
+                        <span class='name'>当天出入：</span>
+                        <span class='num'>20156个</span>
+                    </p>
+                </div>
+                <div class='content'>
+                    <div class='user_one'>
+                        <div class='echars' id='echar_user_one'></div>
+                        <div class='echardes user1_des'>
+                            <p class='user1_color_one'>求访人员：<span>200</span></p>
+                            <p class='user1_color_two'>管理人员：<span>50</span></p>
+                            <p class='user1_color_three'>企业职工：<span>50</span></p>
+                        </div>
+                    </div>
+                    <div class='user_two'>
+                        <div class='echars' id='echar_user_two'></div>
+                        <div class='echardes use2_des'>
+                            <div style="width: 50%;float:left">
+                                    <p class='user2_color_one'>职员：<span>20</span></p>
+                                    <p class='user2_color_two'>组长：<span>90</span></p>
+                                    <p class='user2_color_three'>主管：<span>20</span></p>
+                                    <p class='user2_color_four'>经理：<span>50</span></p>
+                            </div>
+                            <div style="width: 50%;float:left">
+                                    <p class='user2_color_five'>厂长：<span>90</span></p>
+                                    <p class='user2_color_six'>总经理：<span>9</span></p>
+                                    <p class='user2_color_seven'>董事长：<span>1</span></p>
+                            </div>
+                           
+                           
+                        </div>
+                    </div>   
+                </div>
+                <div class='user_line_content'>
+                    <div class='user_line'>
+                        <div class='echars' id='echar_user_line1'></div>
+                        <div class='echars' id='echar_user_line2'></div>
+                    </div>
+                    <div>
+                        <div class='echardes user_line_des'>
+                            <p class='user_line1_des'>本周</p>
+                            <p class='user_line2_des'>上周</p>
+                        </div>
+                    </div>
+                </div>
+               
+            </div>
+            <!-- 车辆信息 -->
+            <div class='cars'>
+                <div class='title'>
+                    <p class='title_name'>车辆信息</p>
+                    <p class='title_des'>
+                        <span class='name'>车辆总数：</span>
+                        <span class='num'>20156辆</span>
+                    </p>
+                </div>
+                <div class='content'>
+                    <div class='cars_one'>
+                        <div class='echars' id='echar_cars_one'></div>
+                        <div class='echardes car1_des'>
+                            <p class='car1_color_one'>内部车辆：<span>200</span></p>
+                            <p class='car1_color_two'>来访车辆：<span>50</span></p>
+                            <p class='car1_color_three'>陌生车辆：<span>50</span></p>
+                        </div>
+                    </div>
+                    <div class='cars_two'>
+                        <div class='echars' id='echar_cars_two'></div>
+                        <div class='echardes car2_des'>
+                            <p class='car2_color_one'>内部车辆：<span>200</span></p>
+                            <p class='car2_color_two'>来访车辆：<span>50</span></p>
+                            <p class='car2_color_three'>陌生车辆：<span>50</span></p>
+                        </div>
+                    </div>
+                    
+                </div>
+                <div class='echars' id='echar_user1'></div>
+                <div class='echars' id='echar_user2'></div>
+                <div class='echars' id='echar_cars_line'></div>
+            </div>
+        </div>
+        <div class='content_right'>
+            <!-- 视频监控 -->
+            <div class='vedio'>
+                 <div class='vedio_one' id='vedio_one'>
+                    <div>
+                        <video id="vedio_1" class="vedio_img video-js vjs-default-skin vjs-big-play-centered" preload="auto" poster="/image/sxtmy.gif" data-setup='{}'>
+                            <source src="rtmp://223.71.17.22:1940/live/tychmp4" type='rtmp/flv'/>
+                        </video>
+                        <div class='vedio_bottom'>
+                            <div class='vedio_name'>视频上墙</div>
+                            <div class='vedio_des'>
+                                <span class='name'>东南角视频</span><br/>
+                                <span class='date'>2019-09-10 13:00</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <video id="vedio_2" class="vedio_img video-js vjs-default-skin vjs-big-play-centered" preload="auto" poster="/image/sxtmy.gif" data-setup='{}'>
+                            <source src="rtmp://223.71.17.22:1940/live/tychmp4" type='rtmp/flv'/>
+                        </video>
+                        <div class='vedio_bottom'>
+                            <div class='vedio_name'>视频上墙</div>
+                            <div class='vedio_des'>
+                                <span class='name'>东南角视频</span><br/>
+                                <span class='date'>2019-09-10 13:00</span>
+                            </div>
+                        </div>
+                    </div>
+                 </div>
+                 <div class='vedio_two' id='vedio_two'>
+                    <div>
+                        <video id="vedio_3" class="vedio_img video-js vjs-default-skin vjs-big-play-centered" preload="auto" poster="/image/sxtmy.gif" data-setup='{}'>
+                            <source src="rtmp://223.71.17.22:1940/live/tychmp4" type='rtmp/flv'/>
+                        </video>
+                        <div class='vedio_bottom'>
+                            <div class='vedio_name'>抓拍上墙</div>
+                            <div class='vedio_des'>
+                                <span class='date'>2019-09-10 13:00</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <video id="vedio_4" class="vedio_img video-js vjs-default-skin vjs-big-play-centered" preload="auto" poster="/image/sxtmy.gif" data-setup='{}'>
+                            <source src="rtmp://223.71.17.22:1940/live/tychmp4" type='rtmp/flv'/>
+                        </video>
+                        <div class='vedio_bottom'>
+                            <div class='vedio_name'>抓拍上墙</div>
+                            <div class='vedio_des'>
+                                <span class='date'>2019-09-10 13:00</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <video id="vedio_5" class="vedio_img video-js vjs-default-skin vjs-big-play-centered" preload="auto" poster="/image/sxtmy.gif" data-setup='{}'>
+                            <source src="rtmp://223.71.17.22:1940/live/tychmp4" type='rtmp/flv'/>
+                        </video>
+                        <div class='vedio_bottom'>
+                            <div class='vedio_name'>抓拍上墙</div>
+                            <div class='vedio_des'>
+                                <span class='date'>2019-09-10 13:00</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <video id="vedio_6" class="vedio_img video-js vjs-default-skin vjs-big-play-centered" preload="auto" poster="/image/sxtmy.gif" data-setup='{}'>
+                            <source src="rtmp://223.71.17.22:1940/live/tychmp4" type='rtmp/flv'/>
+                        </video>
+                        <div class='vedio_bottom'>
+                            <div class='vedio_name'>抓拍上墙</div>
+                            <div class='vedio_des'>
+                                <span class='date'>2019-09-10 13:00</span>
+                            </div>
+                        </div>
+                    </div>
+                 </div>
+            </div>
+            <!-- tab切换 -->
+            <div class="tab">
+                <div class='tab_button'>
+                    <div class='tab_button_li active'>
+                        <img src="/image/tab_1.png"/>
+                        <span>边界站点</span>
+                    </div>
+                    <div class='tab_button_li'>
+                        <img src="/image/tab_2.png"/>
+                        <span>污水处理</span>
+                    </div>
+                    <div class='tab_button_li'>
+                        <img src="/image/tab_3.png"/>
+                        <span>企业工况</span>
+                    </div>
+                    <div class='tab_button_li'>
+                        <img src="/image/tab_4.png"/>
+                        <span>设备信息</span>
+                    </div>
+                    <div class='tab_button_li'>
+                        <img src="/image/tab_5.png"/>
+                        <span>事件工况</span>
+                    </div>
+                </div>
+                <div class='tab_content'>
+                    <!-- 边界站点 -->
+                    <div class='tab_content_li' style="visibility: visible">
+                        <div class='tab_content_title'>
+                            <p class='tab_content_name'>站点总数：3个</p>
+                            <p class='tab_content_des tab_bianjie'>
+                                <span>笨</span>
+                                <span>甲苯</span>
+                                <span>二甲苯</span>
+                                <span>非甲烷总烃</span>
+                            </p>
+                        </div>
+                        <div class='tab_content_echars'>
+                            <div class='echars' id='echar_tab1_south'></div>
+                            <div class='echars' id='echar_tab1_north'></div>
+                            <div class='echars' id='echar_tab1_west'></div>
+                        </div>
+                    </div>
+                    <!-- 污水处理 -->
+                    <div class='tab_content_li'>
+                            <div class='tab_content_title'>
+                                <p class='tab_content_des tab_wushui'>
+                                    <span>累计流量(m3)</span>
+                                    <span>污水流量(L/s)</span>
+                                    <span>PH值（ph）</span>
+                                    <span>化学需氧量(mg/l)</span>
+                                    <span>氨氢(mg/100L)</span>
+                                </p>
+                            </div>
+                            <div class='tab_content_echars'>
+                                <div class='echars' id='echar_tab2'></div>
+                            </div>
+                    </div>
+                    <!-- 企业工况-->
+                    <div class='tab_content_li'>
+                        <div class='tab_content_echars' >
+                            <div style="display: flex;align-items: center;">
+                                <div class='echars' id='echar_tab3_one'></div>
+                                <div class='tab3_two'>
+                                    <div class='echars' id='echar_tab3_two'></div>
+                                    <p style='text-align: center;font-size: 0.9rem;'>企业工况图</p>
+                                </div>
+                                
+                                <div class='tab_content_des tab_qygongkuang'>
+                                    <span>全园当前生产中企业占比</span>
+                                    <span>全园当前未生产中企业占比</span>
+                                    <span>同步启用治理企业占比</span>
+                                </div>
+                            </div>
+                            <div>
+                                <div class='tab_content_des tab_tab3_des'>
+                                    <span>生产累计时长</span>
+                                    <span>未同步启用治理累计时长</span>
+                                </div>
+                                <div class='echars' id='echar_tab3_three'></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 设备信息-->
+                    <div class='tab_content_li'>
+                            <div class='tab_content_title'>
+                                <p class='tab_content_name'>
+                                    <span>设备总数：221个</span>
+                                    <span class='green' style="padding-left: 1rem">在线数：189个</span>
+                                    <span class='red' style="padding-left: 1rem">离线数：12个</span>
+                                </p>
+                            </div>
+                            <div class='tab_content_echars'>
+                                <div class='echars' id='echar_tab4_one'></div>
+                                <p style='text-align: center;font-size: 0.9rem;'>设备分类统计图（单位：台）</p>
+                                <div class='echars' id='echar_tab4_two'></div>
+                            </div>
+                    </div>
+                    <!--事件工况-->
+                    <div class='tab_content_li'>
+                            <div class='tab_content_title'>
+                                <p class='tab_content_name'>
+                                    <span>总数：221个</span>
+                                    <span class='red' style="padding-left: 1rem">预警统计：189个</span>
+                                    <span class='green' style="padding-left: 1rem">完成统计：12个</span>
+                                </p>
+                            </div>
+                            <div class='tab_content_echars'>
+                                <div style="display: flex">
+                                    <div class='echars' id='echar_tab5_one'></div>
+                                    <div class='echardes event_des'>
+                                        <p class='event_color_one'>安全事件：<span>900</span></p>
+                                        <p class='event_color_two'>入驻事件：<span>900</span></p>
+                                        <p class='event_color_three'>来访事件：<span>900</span></p>
+                                    </div>
+                                </div>
+                                <div style="display: flex">
+                                    <div class='tab_5_event'>
+                                        <img src="/image/event_red.png" />
+                                        <div class='event_img_des'>
+                                            <span class="event_img_des_ch">预警事件</span><br/>
+                                            <span class="event_img_des_en event_warning">Warning</span>
+                                        </div>
+                                        <div class='event_img_num event_warning'>3432件</div>
+                                    </div>
+                                    <div class='tab_5_event'>
+                                        <img src="/image/event_green.png" />
+                                        <div class='event_img_des'>
+                                            <span class="event_img_des_ch">完成事件</span><br/>
+                                            <span class="event_img_des_en event_completion">Completion</span>
+                                        </div>
+                                        <div class='event_img_num event_completion'>3431件</div>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class='content_botton'>
+            <div class='event_bottom'>
+                <img src='/image/event_red_bottom.png'/>
+                <p class='red'>3432件</p>
+            </div>
+            <div class='event_bottom'>
+                <img src='/image/event_green_bottom.png'/>
+                <p class='green'>3432件</p>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    window._AMapSecurityConfig = {
+        securityJsCode:'e81d05a7fdf22ba0879cbeef608d265e',
+    }
+</script>
+<script type="text/javascript" src="/js/map.js"></script>
+<script type="module" src="/js/index.js"></script>
+
+</body>
+</html>
